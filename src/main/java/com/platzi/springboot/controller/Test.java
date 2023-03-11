@@ -1,4 +1,4 @@
-package com.fundamentosplatzi.springboot.fundamentos.controller;
+package com.platzi.springboot.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -7,10 +7,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-public class TestController {
-    @RequestMapping("/")
+public class Test {
+
+    @RequestMapping
     @ResponseBody
     public ResponseEntity<String> function(){
-        return new ResponseEntity<>("hello desde mi controlee devtools jejr ", HttpStatus.OK);
+        return new ResponseEntity<>("Hello from controller", HttpStatus.OK);
     }
+
 }

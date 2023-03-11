@@ -1,10 +1,10 @@
-package com.fundamentosplatzi.springboot.fundamentos;
+package com.platzi.springboot;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class FundamentosApplicationTests {
+class ApplicationTests {
 
 	@Test
 	void contextLoads() {
