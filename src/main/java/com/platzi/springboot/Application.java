@@ -57,18 +57,25 @@ public class Application implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        System.out.println(myBean.hello());
-        myComponent.printSomething();
-        System.out.println(userProperties.toString());
-        System.out.println("hola mundo utilizando spring boot devtools");
-        logger.info("error en el aplicativo");
-        Function function = uppercase();
-        System.out.println(function.apply("michael"));
+
+
+        //cargando data
         saveUsersInDb();
+        //getInformationJpqlFromUser();
+        saveWithErrorTransactional();
+
+        //consultas
+
+    }
+    private  void getInformationJpqlFromUser(){
         System.out.println(userService.getUserByEmail("oscar@domain.com"));
         userService.getUsersByName("J").stream().forEach(System.out::println);
         saveWithErrorTransactional();
         System.out.println(userService.getUserByEmail("Test9@domain.com").getPosts());
+
+
+        logger.info("El usuario apartir del named parameter es:"+ userRepository.getAllByBirthDateAndEmail(LocalDate.of(2021, 03, 25),"daniela@domain.com")
+                .orElseThrow(() -> new RuntimeException("No se encontro el usuario apartir del named parameter")));
 
         logger.info("User with method findUserByNameAndEmail: " + userRepository.findUsersByNameAndAndEmail("John", "john@domain.com")
                 .orElseThrow(() -> new RuntimeException("No se encontro el usuario por el email dado")));
@@ -92,8 +99,19 @@ public class Application implements CommandLineRunner {
         logger.info("User with method findByNameOrEmail: " + userRepository.findByNameOrEmail(null, "Test5@domain.com")
                 .orElseThrow(() -> new RuntimeException("No se encontro el usuario por el email dado")));
 
+
     }
 
+    private  void EjemplosAnteriores(){
+        System.out.println(myBean.hello());
+        myComponent.printSomething();
+        System.out.println(userProperties.toString());
+        System.out.println("hola mundo utilizando spring boot devtools");
+        logger.info("error en el aplicativo");
+        Function function = uppercase();
+        System.out.println(function.apply("michael"));
+
+    }
     private void saveWithErrorTransactional() {
         User test1 = new User("TestTransactional1", "TestTransactional1@domain.com", LocalDate.now());
         User test2 = new User("TestTransactional2", "TestTransactional2@domain.com", LocalDate.now());

@@ -15,7 +15,9 @@ public class UserServiceImpl implements UserService {
     private static final String MESSAGE_USER_NOT_FOUND = "Ha ocurrido un error buscando el usuario por email";
     private UserRepository userRepository;
 
+
     public UserServiceImpl(UserRepository userRepository) {
+
         this.userRepository = userRepository;
     }
 
@@ -30,6 +32,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
+    }
+
+    @Override
     public List<User> getUsersByName(String name) {
         return userRepository.findByNameContaining(name);
     }
@@ -41,4 +48,28 @@ public class UserServiceImpl implements UserService {
                 .peek(user -> logger.info("Insert: " + user))
                 .forEach(user -> userRepository.save(user));
     }
+
+    @Override
+    public User save(User newUser) {
+        return userRepository.save(newUser);
+    }
+
+    @Override
+    public void delete(Long id) {
+        userRepository.delete(new User(id));
+    }
+
+    @Override
+    public User update(User newUser, Long id) {
+        return userRepository.findById(id).map(
+                        user -> {
+                            user.setEmail(newUser.getEmail());
+                            user.setBirthDate(newUser.getBirthDate());
+                            user.setName(newUser.getName());
+                            return userRepository.save(user);
+                        }
+                ).get();
+    }
+
+
 }
